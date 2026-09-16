@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SANAM SALON — LUXURY DESIGN SYSTEM & STYLESHEET
+   SANAM SALON — LUXURY DESIGN SYSTEM & RESPONSIVE STYLESHEET
    ========================================================================== */
 
 :root {
@@ -28,12 +28,7 @@
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 
-  /*
-    Z-INDEX SYSTEM
-
-    Keep the site's own UI below third-party floating widgets.
-    The chatbot is expected to create its own fixed/floating layer.
-  */
+  /* Z-Index System */
   --z-background: 0;
   --z-content: 2;
   --z-header: 1000;
@@ -61,28 +56,94 @@ html {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
+
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+
+  /*
+    Prevent horizontal page movement on mobile.
+  */
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
-  line-height: 1.6;
-  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 100vh;
+
+  line-height: 1.6;
+
   display: flex;
   flex-direction: column;
+
   background: var(--color-bg);
+
+  /*
+    clip is safer than simply hiding overflow because it
+    prevents accidental horizontal scrolling while allowing
+    fixed-position elements to behave normally.
+  */
+  overflow-x: clip;
 }
 
 main {
   flex: 1;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+
+/* ==========================================================================
+   GLOBAL RESPONSIVE SAFETY
+   ========================================================================== */
+
+img,
+picture,
+video,
+canvas,
+svg,
+iframe {
+  max-width: 100%;
 }
 
 img {
-  max-width: 100%;
   height: auto;
   display: block;
   object-fit: cover;
+}
+
+iframe {
+  border: 0;
+}
+
+section,
+header,
+footer,
+nav,
+main,
+article,
+aside,
+div {
+  min-width: 0;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+span,
+li {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 a {
@@ -102,6 +163,7 @@ textarea {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
+  max-width: 100%;
 }
 
 
@@ -113,11 +175,16 @@ textarea {
   position: absolute;
   top: -100px;
   left: 1rem;
+
   background: var(--color-accent);
   color: #000;
+
   padding: 0.75rem 1.25rem;
+
   z-index: var(--z-skip-link);
+
   font-weight: 600;
+
   transition: top var(--transition-fast);
 }
 
@@ -133,9 +200,14 @@ textarea {
 .container {
   width: 100%;
   max-width: var(--container-max);
-  margin: 0 auto;
+
+  margin-left: auto;
+  margin-right: auto;
+
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+
+  min-width: 0;
 }
 
 
@@ -145,15 +217,17 @@ textarea {
 
 .grid {
   display: grid;
+  width: 100%;
+  min-width: 0;
   gap: 2rem;
 }
 
 .grid-2-col {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .grid-3-col {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .align-center {
@@ -162,11 +236,11 @@ textarea {
 
 @media (min-width: 768px) {
   .grid-2-col {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .grid-3-col {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -183,6 +257,8 @@ h4 {
   font-weight: 500;
   line-height: 1.2;
   color: #FFFFFF;
+
+  overflow-wrap: break-word;
 }
 
 h1 {
@@ -217,11 +293,15 @@ h3 {
 
 .section-tag {
   display: inline-block;
+
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
+
   color: var(--color-accent);
+
   margin-bottom: 0.5rem;
+
   font-weight: 600;
 }
 
@@ -231,7 +311,10 @@ h3 {
 
 .section-subtitle {
   color: var(--color-muted);
+
+  width: 100%;
   max-width: 600px;
+
   margin: 0 auto 2rem auto;
 }
 
@@ -242,20 +325,33 @@ h3 {
 
 .btn {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
+  min-height: 44px;
+  max-width: 100%;
+
   padding: 0.875rem 2rem;
+
   font-size: 0.875rem;
   font-weight: 500;
+
   letter-spacing: 0.05em;
   text-transform: uppercase;
+
+  text-align: center;
+
   border-radius: var(--radius-sm);
+
   cursor: pointer;
+
   transition:
     color var(--transition-normal),
     background-color var(--transition-normal),
     border-color var(--transition-normal),
     transform var(--transition-normal);
+
   border: 1px solid transparent;
 }
 
@@ -283,7 +379,9 @@ h3 {
 
 .btn-outline-sm {
   padding: 0.5rem 1.25rem;
+
   font-size: 0.75rem;
+
   border: 1px solid var(--color-accent);
   color: var(--color-accent);
 }
@@ -304,10 +402,15 @@ h3 {
 
 .btn-text {
   color: var(--color-accent);
+
   font-weight: 500;
+
   display: inline-flex;
   align-items: center;
+
   margin-top: 1rem;
+
+  max-width: 100%;
 }
 
 .btn-text:hover {
@@ -321,30 +424,49 @@ h3 {
 
 .top-bar {
   position: relative;
+
   z-index: var(--z-content);
+
+  width: 100%;
+  max-width: 100%;
+
   background: #080808;
+
   border-bottom: 1px solid var(--color-border);
+
   font-size: 0.75rem;
   color: var(--color-muted);
+
   padding: 0.5rem 0;
+
+  overflow: hidden;
 }
 
 .top-bar-content {
   display: flex;
+
   flex-direction: column;
+
   gap: 0.25rem;
+
   text-align: center;
+
+  width: 100%;
+  min-width: 0;
+}
+
+.top-bar a {
+  color: var(--color-accent);
+
+  overflow-wrap: anywhere;
 }
 
 @media (min-width: 600px) {
   .top-bar-content {
     flex-direction: row;
     justify-content: space-between;
+    text-align: left;
   }
-}
-
-.top-bar a {
-  color: var(--color-accent);
 }
 
 
@@ -354,52 +476,75 @@ h3 {
 
 .site-header {
   position: sticky;
+
   top: 0;
+
   z-index: var(--z-header);
 
+  width: 100%;
+  max-width: 100%;
+
   background: rgba(17, 17, 17, 0.95);
+
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 
   border-bottom: 1px solid var(--color-border);
+
   transition:
     padding var(--transition-fast),
     box-shadow var(--transition-normal);
-
-  /*
-    Important:
-    Do not use transform here.
-    A transformed ancestor can create a stacking context
-    that interferes with floating third-party widgets.
-  */
 }
 
 .header-container {
+  width: 100%;
+  min-width: 0;
+
   display: flex;
+
   align-items: center;
   justify-content: space-between;
+
+  gap: 1rem;
+
   height: 70px;
 }
 
 .brand-logo {
   display: flex;
   flex-direction: column;
+
   line-height: 1;
+
+  min-width: 0;
+
+  flex: 0 1 auto;
 }
 
 .logo-main {
   font-family: var(--font-serif);
+
   font-size: 1.5rem;
+
   letter-spacing: 0.15em;
+
   font-weight: 600;
+
   color: #FFFFFF;
+
+  white-space: nowrap;
 }
 
 .logo-sub {
   font-size: 0.6rem;
+
   letter-spacing: 0.35em;
+
   color: var(--color-accent);
+
   margin-top: 2px;
+
+  white-space: nowrap;
 }
 
 .nav-desktop {
@@ -409,21 +554,32 @@ h3 {
 @media (min-width: 900px) {
   .nav-desktop {
     display: block;
+
+    min-width: 0;
   }
 }
 
 .nav-list {
   display: flex;
+
   gap: 2rem;
+
+  min-width: 0;
 }
 
 .nav-link {
   font-size: 0.875rem;
+
   text-transform: uppercase;
   letter-spacing: 0.08em;
+
   color: var(--color-muted);
+
   padding: 0.5rem 0;
+
   position: relative;
+
+  white-space: nowrap;
 }
 
 .nav-link:hover,
@@ -433,16 +589,22 @@ h3 {
 
 .nav-link.active::after {
   content: '';
+
   position: absolute;
+
   bottom: 0;
   left: 0;
+
   width: 100%;
   height: 2px;
+
   background: var(--color-accent);
 }
 
 .header-cta {
   display: none;
+
+  flex-shrink: 0;
 }
 
 @media (min-width: 600px) {
@@ -458,14 +620,29 @@ h3 {
 
 .mobile-toggle {
   display: flex;
+
   flex-direction: column;
+
   gap: 6px;
+
   background: none;
   border: none;
+
   cursor: pointer;
+
   padding: 0.5rem;
+
   position: relative;
+
   z-index: var(--z-mobile-menu);
+
+  flex-shrink: 0;
+
+  min-width: 44px;
+  min-height: 44px;
+
+  align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 900px) {
@@ -477,8 +654,12 @@ h3 {
 .hamburger-line {
   width: 24px;
   height: 2px;
+
   background-color: var(--color-text);
+
   transition: all var(--transition-fast);
+
+  flex-shrink: 0;
 }
 
 
@@ -488,10 +669,14 @@ h3 {
 
 .mobile-nav-drawer {
   position: fixed;
+
   top: 70px;
   left: 0;
+  right: 0;
 
   width: 100%;
+  max-width: 100vw;
+
   height: calc(100vh - 70px);
   height: calc(100dvh - 70px);
 
@@ -500,34 +685,55 @@ h3 {
   padding: 2rem 1.5rem;
 
   display: flex;
+
   flex-direction: column;
 
-  transform: translateX(100%);
+  transform: translate3d(100%, 0, 0);
+
   transition: transform var(--transition-slow);
 
-  /*
-    Keep mobile navigation below the chatbot layer.
-  */
   z-index: var(--z-mobile-menu);
 
+  overflow-x: hidden;
   overflow-y: auto;
+
   -webkit-overflow-scrolling: touch;
+
+  overscroll-behavior-x: none;
+
+  /*
+    Prevent mobile drawer from becoming wider than viewport.
+  */
+  box-sizing: border-box;
 }
 
 .mobile-nav-drawer.is-open {
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .mobile-nav-list {
   display: flex;
+
   flex-direction: column;
+
   gap: 1.5rem;
+
+  width: 100%;
+  min-width: 0;
 }
 
 .mobile-nav-link {
   font-family: var(--font-serif);
+
   font-size: 1.75rem;
+
   color: var(--color-muted);
+
+  display: block;
+
+  max-width: 100%;
+
+  overflow-wrap: break-word;
 }
 
 .mobile-nav-link.active,
@@ -537,15 +743,24 @@ h3 {
 
 .mobile-nav-footer {
   margin-top: auto;
+
   padding-top: 2rem;
+
   border-top: 1px solid var(--color-border);
+
+  width: 100%;
 }
 
 .mobile-address {
   font-size: 0.8rem;
+
   color: var(--color-muted);
+
   text-align: center;
+
   margin-top: 1rem;
+
+  overflow-wrap: anywhere;
 }
 
 
@@ -555,8 +770,17 @@ h3 {
 
 .section {
   position: relative;
+
   z-index: var(--z-content);
+
+  width: 100%;
+  max-width: 100%;
+
+  min-width: 0;
+
   padding: 4rem 0;
+
+  overflow: clip;
 }
 
 @media (min-width: 768px) {
@@ -576,10 +800,18 @@ h3 {
 
 .hero-section {
   position: relative;
+
   isolation: isolate;
 
+  width: 100%;
+  max-width: 100%;
+
+  min-width: 0;
+
   padding: 4rem 0 3rem 0;
+
   min-height: calc(85vh - 70px);
+  min-height: calc(85dvh - 70px);
 
   display: flex;
   align-items: center;
@@ -591,12 +823,9 @@ h3 {
       transparent 60%
     );
 
-  /*
-    Creates a controlled stacking context for hero only.
-    This prevents the canvas from escaping and interfering
-    with floating widgets elsewhere on the page.
-  */
   z-index: var(--z-content);
+
+  overflow: clip;
 }
 
 .hero-canvas {
@@ -610,6 +839,8 @@ h3 {
   width: 100%;
   height: 100%;
 
+  max-width: 100%;
+
   pointer-events: none;
 
   z-index: var(--z-background);
@@ -617,34 +848,58 @@ h3 {
 
 .hero-container {
   position: relative;
+
   z-index: var(--z-content);
 
+  width: 100%;
+  min-width: 0;
+
   display: grid;
-  grid-template-columns: 1fr;
+
+  grid-template-columns: minmax(0, 1fr);
 
   gap: 3rem;
+
   align-items: center;
 }
 
 @media (min-width: 900px) {
   .hero-container {
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns:
+      minmax(0, 1.1fr)
+      minmax(0, 0.9fr);
   }
 }
 
 .hero-subtitle {
   display: inline-block;
+
+  max-width: 100%;
+
   font-size: 0.875rem;
+
   letter-spacing: 0.2em;
+
   text-transform: uppercase;
+
   color: var(--color-accent);
+
   margin-bottom: 1rem;
+
+  overflow-wrap: anywhere;
 }
 
 .hero-title {
+  width: 100%;
+  max-width: 100%;
+
   font-size: 2.75rem;
+
   line-height: 1.15;
+
   margin-bottom: 1.25rem;
+
+  overflow-wrap: break-word;
 }
 
 @media (min-width: 768px) {
@@ -654,30 +909,51 @@ h3 {
 }
 
 .hero-description {
-  font-size: 1.1rem;
-  color: var(--color-muted);
-  margin-bottom: 2rem;
+  width: 100%;
   max-width: 540px;
+
+  font-size: 1.1rem;
+
+  color: var(--color-muted);
+
+  margin-bottom: 2rem;
 }
 
 .hero-actions {
   display: flex;
+
   flex-wrap: wrap;
+
   gap: 1rem;
+
+  width: 100%;
+  max-width: 100%;
 }
 
 .hero-image-wrapper {
   position: relative;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
   border-radius: var(--radius-md);
+
   overflow: hidden;
+
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+
   border: 1px solid var(--color-border);
 }
 
 .hero-image {
   width: 100%;
-  height: 100%;
+  max-width: 100%;
+
+  height: auto;
+
   max-height: 520px;
+
   object-fit: cover;
 }
 
@@ -688,16 +964,30 @@ h3 {
 
 .page-hero {
   position: relative;
+
   z-index: var(--z-content);
 
+  width: 100%;
+  max-width: 100%;
+
   padding: 4rem 0 2rem 0;
+
   background: var(--color-surface);
+
   border-bottom: 1px solid var(--color-border);
+
+  overflow: clip;
 }
 
 .page-hero-title {
+  width: 100%;
+  max-width: 100%;
+
   font-size: 2.5rem;
+
   margin-bottom: 0.5rem;
+
+  overflow-wrap: break-word;
 }
 
 @media (min-width: 768px) {
@@ -708,14 +998,21 @@ h3 {
 
 .page-hero-subtitle {
   color: var(--color-muted);
+
   font-size: 1.1rem;
+
+  width: 100%;
   max-width: 600px;
+
   margin: 0 auto;
 }
 
 .pricing-notice {
   font-size: 0.85rem;
+
   color: var(--color-accent);
+
+  overflow-wrap: anywhere;
 }
 
 
@@ -725,26 +1022,39 @@ h3 {
 
 .services-grid {
   display: grid;
-  grid-template-columns: 1fr;
+
+  width: 100%;
+  min-width: 0;
+
+  grid-template-columns: minmax(0, 1fr);
+
   gap: 1.5rem;
 }
 
 @media (min-width: 600px) {
   .services-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 992px) {
   .services-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
   }
 }
 
 .service-card {
+  width: 100%;
+  min-width: 0;
+
   background: var(--color-surface-card);
+
   padding: 2rem;
+
   border-radius: var(--radius-md);
+
   border: 1px solid var(--color-border);
 
   transition:
@@ -752,16 +1062,19 @@ h3 {
     border-color var(--transition-fast);
 
   display: flex;
+
   flex-direction: column;
 }
 
 .service-card:hover {
   transform: translateY(-4px);
+
   border-color: var(--color-accent);
 }
 
 .service-icon {
   font-size: 2rem;
+
   margin-bottom: 1rem;
 }
 
@@ -771,17 +1084,26 @@ h3 {
 
 .service-card p {
   font-size: 0.9rem;
+
   color: var(--color-muted);
+
   margin-bottom: 1.5rem;
+
   flex-grow: 1;
 }
 
 .card-link {
   font-size: 0.8rem;
+
   text-transform: uppercase;
+
   letter-spacing: 0.1em;
+
   color: var(--color-accent);
+
   font-weight: 600;
+
+  overflow-wrap: anywhere;
 }
 
 
@@ -790,9 +1112,15 @@ h3 {
    ========================================================================== */
 
 .benefit-card {
+  width: 100%;
+  min-width: 0;
+
   background: var(--color-surface-card);
+
   padding: 2rem;
+
   border-radius: var(--radius-md);
+
   border-left: 3px solid var(--color-accent);
 }
 
@@ -802,6 +1130,7 @@ h3 {
 
 .benefit-card p {
   color: var(--color-muted);
+
   font-size: 0.95rem;
 }
 
@@ -812,31 +1141,46 @@ h3 {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: 1fr;
+
+  width: 100%;
+  min-width: 0;
+
+  grid-template-columns: minmax(0, 1fr);
+
   gap: 1rem;
 }
 
 @media (min-width: 600px) {
   .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 900px) {
   .gallery-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
   }
 }
 
 .gallery-item {
+  width: 100%;
+  min-width: 0;
+
   border-radius: var(--radius-sm);
+
   overflow: hidden;
+
   height: 250px;
 }
 
 .gallery-item img {
   width: 100%;
   height: 100%;
+
+  max-width: 100%;
+
   transition: transform var(--transition-slow);
 }
 
@@ -851,22 +1195,35 @@ h3 {
 
 .feature-list {
   margin-top: 1.5rem;
+
   display: flex;
+
   flex-direction: column;
+
   gap: 1rem;
+
+  width: 100%;
 }
 
 .feature-list li {
   font-size: 0.95rem;
+
   color: var(--color-muted);
+
   position: relative;
+
   padding-left: 1.5rem;
+
+  overflow-wrap: break-word;
 }
 
 .feature-list li::before {
   content: '✦';
+
   position: absolute;
+
   left: 0;
+
   color: var(--color-accent);
 }
 
@@ -876,6 +1233,11 @@ h3 {
    ========================================================================== */
 
 .experience-card {
+  width: 100%;
+  max-width: 800px;
+
+  min-width: 0;
+
   background:
     linear-gradient(
       135deg,
@@ -884,10 +1246,11 @@ h3 {
     );
 
   padding: 3rem 2rem;
+
   border-radius: var(--radius-md);
+
   border: 1px solid var(--color-border);
 
-  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -898,16 +1261,28 @@ h3 {
 
 .address-block {
   font-style: normal;
+
   margin: 1rem 0;
+
   color: var(--color-muted);
+
   line-height: 1.8;
+
+  overflow-wrap: anywhere;
 }
 
 .map-placeholder {
+  width: 100%;
+  min-width: 0;
+
   background: var(--color-surface-card);
+
   border: 1px solid var(--color-border);
+
   border-radius: var(--radius-md);
+
   padding: 3rem 2rem;
+
   text-align: center;
 }
 
@@ -917,7 +1292,9 @@ h3 {
 
 .map-content p {
   color: var(--color-muted);
+
   font-size: 0.9rem;
+
   margin-bottom: 1.5rem;
 }
 
@@ -935,16 +1312,21 @@ h3 {
     );
 
   border-top: 1px solid var(--color-border);
+
+  overflow: clip;
 }
 
 .cta-title {
   font-size: 2.25rem;
+
   margin-bottom: 0.75rem;
 }
 
 .cta-subtitle {
   color: var(--color-muted);
+
   margin-bottom: 2rem;
+
   font-size: 1.1rem;
 }
 
@@ -955,44 +1337,72 @@ h3 {
 
 .contact-details-box,
 .contact-form-box {
+  width: 100%;
+  min-width: 0;
+
   background: var(--color-surface);
+
   padding: 2.5rem;
+
   border-radius: var(--radius-md);
+
   border: 1px solid var(--color-border);
 }
 
 .contact-info-item {
   margin-bottom: 1.5rem;
+
+  min-width: 0;
 }
 
 .contact-info-item h3 {
   font-size: 1.1rem;
+
   margin-bottom: 0.25rem;
 }
 
 .contact-info-item p {
   color: var(--color-muted);
+
+  overflow-wrap: anywhere;
 }
 
 .phone-link {
   color: var(--color-accent);
+
   font-weight: 600;
+
   font-size: 1.1rem;
+
+  overflow-wrap: anywhere;
 }
 
 .hours-list {
   margin-top: 0.5rem;
+
   display: flex;
+
   flex-direction: column;
+
   gap: 0.35rem;
+
   font-size: 0.9rem;
+
+  width: 100%;
 }
 
 .hours-list li {
   display: flex;
+
   justify-content: space-between;
+
+  gap: 1rem;
+
   border-bottom: 1px dashed var(--color-border);
+
   padding-bottom: 0.25rem;
+
+  min-width: 0;
 }
 
 
@@ -1002,35 +1412,62 @@ h3 {
 
 .contact-form {
   display: flex;
+
   flex-direction: column;
+
   gap: 1.25rem;
+
   margin-top: 1.5rem;
+
+  width: 100%;
 }
 
 .form-group {
   display: flex;
+
   flex-direction: column;
+
   gap: 0.35rem;
+
+  width: 100%;
+
+  min-width: 0;
 }
 
 .form-group label {
   font-size: 0.85rem;
+
   text-transform: uppercase;
+
   letter-spacing: 0.05em;
+
   color: var(--color-muted);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
   background: var(--color-bg);
+
   border: 1px solid var(--color-border);
+
   border-radius: var(--radius-sm);
+
   padding: 0.75rem;
+
   color: var(--color-text);
+
   outline: none;
 
   transition: border-color var(--transition-fast);
+}
+
+.form-group textarea {
+  resize: vertical;
 }
 
 .form-group input:focus,
@@ -1041,7 +1478,9 @@ h3 {
 
 .error-msg {
   font-size: 0.75rem;
+
   color: #FF5555;
+
   display: none;
 }
 
@@ -1055,12 +1494,20 @@ h3 {
 
 .form-feedback-box {
   margin-top: 1.5rem;
+
   padding: 1rem;
+
   border-radius: var(--radius-sm);
+
   background: var(--color-surface-card);
+
   border: 1px solid var(--color-accent);
+
   color: var(--color-text);
+
   font-size: 0.9rem;
+
+  overflow-wrap: anywhere;
 }
 
 
@@ -1069,41 +1516,64 @@ h3 {
    ========================================================================== */
 
 .faq-accordion {
+  width: 100%;
   max-width: 800px;
+
   margin: 2rem auto 0 auto;
+
   display: flex;
+
   flex-direction: column;
+
   gap: 1rem;
 }
 
 .faq-item {
+  width: 100%;
+  min-width: 0;
+
   background: var(--color-surface-card);
+
   border: 1px solid var(--color-border);
+
   border-radius: var(--radius-sm);
+
   overflow: hidden;
 }
 
 .faq-question {
   width: 100%;
+
+  min-height: 48px;
+
   padding: 1.25rem 1.5rem;
 
   background: none;
+
   border: none;
+
   text-align: left;
 
   font-family: var(--font-serif);
+
   font-size: 1.25rem;
+
   color: #FFFFFF;
 
   cursor: pointer;
 
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
+
+  gap: 1rem;
 }
 
 .faq-answer {
   max-height: 0;
+
   overflow: hidden;
 
   transition:
@@ -1113,11 +1583,13 @@ h3 {
   padding: 0 1.5rem;
 
   color: var(--color-muted);
+
   font-size: 0.95rem;
 }
 
 .faq-item.is-open .faq-answer {
   max-height: 200px;
+
   padding: 0 1.5rem 1.25rem 1.5rem;
 }
 
@@ -1127,7 +1599,10 @@ h3 {
 
 .faq-icon {
   transition: transform var(--transition-fast);
+
   color: var(--color-accent);
+
+  flex-shrink: 0;
 }
 
 
@@ -1136,35 +1611,54 @@ h3 {
    ========================================================================== */
 
 .legal-content {
+  width: 100%;
   max-width: 800px;
+
   line-height: 1.8;
+
+  min-width: 0;
 }
 
 .legal-content h2 {
   font-size: 1.5rem;
+
   margin: 2rem 0 0.75rem 0;
+
   color: var(--color-accent);
 }
 
 .legal-content p {
   color: var(--color-muted);
+
   margin-bottom: 1rem;
+
+  overflow-wrap: anywhere;
 }
 
 .legal-content ul {
   list-style: disc;
+
   margin-left: 1.5rem;
+
   color: var(--color-muted);
+
   margin-bottom: 1rem;
 }
 
 .legal-note {
   font-size: 0.85rem;
+
   color: var(--color-accent);
+
   background: var(--color-surface);
+
   padding: 1rem;
+
   border-left: 3px solid var(--color-accent);
+
   margin-bottom: 2rem;
+
+  overflow-wrap: anywhere;
 }
 
 
@@ -1174,54 +1668,92 @@ h3 {
 
 .site-footer {
   position: relative;
+
   z-index: var(--z-content);
 
+  width: 100%;
+  max-width: 100%;
+
   background: #0A0A0A;
+
   border-top: 1px solid var(--color-border);
 
   padding-top: 4rem;
+
   font-size: 0.9rem;
+
+  overflow: clip;
 }
 
 .footer-container {
+  width: 100%;
+  min-width: 0;
+
   display: grid;
-  grid-template-columns: 1fr;
+
+  grid-template-columns:
+    minmax(0, 1fr);
+
   gap: 2.5rem;
+
   padding-bottom: 3rem;
 }
 
 @media (min-width: 600px) {
   .footer-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 900px) {
   .footer-container {
-    grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+    grid-template-columns:
+      minmax(0, 1.5fr)
+      minmax(0, 1fr)
+      minmax(0, 1fr)
+      minmax(0, 1.5fr);
   }
+}
+
+.footer-brand {
+  min-width: 0;
 }
 
 .footer-brand p {
   color: var(--color-muted);
+
   margin-top: 1rem;
+
   font-size: 0.85rem;
+
+  overflow-wrap: anywhere;
+}
+
+.footer-col {
+  min-width: 0;
 }
 
 .footer-col h4 {
   font-size: 1.1rem;
+
   margin-bottom: 1.25rem;
+
   color: #FFFFFF;
 }
 
 .footer-col ul {
   display: flex;
+
   flex-direction: column;
+
   gap: 0.5rem;
 }
 
 .footer-col a {
   color: var(--color-muted);
+
+  overflow-wrap: anywhere;
 }
 
 .footer-col a:hover {
@@ -1230,15 +1762,24 @@ h3 {
 
 .footer-address {
   color: var(--color-muted);
+
   margin-bottom: 0.75rem;
+
+  overflow-wrap: anywhere;
 }
 
 .footer-bottom {
   border-top: 1px solid var(--color-border);
+
   padding: 1.5rem 0;
+
   color: var(--color-muted);
+
   font-size: 0.8rem;
+
   text-align: center;
+
+  overflow-wrap: anywhere;
 }
 
 
@@ -1264,23 +1805,18 @@ h3 {
 
 
 /* ==========================================================================
-   THIRD-PARTY CHAT WIDGET SAFETY LAYER
+   THIRD-PARTY CHAT WIDGET
    ========================================================================== */
 
 /*
+  Zanderio is dynamically injected.
+
   IMPORTANT:
+  We do NOT force every iframe to position: fixed.
+  The widget's own loader should control its geometry.
 
-  Zanderio injects its chatbot dynamically.
-  We intentionally DO NOT use broad selectors like:
-
-      iframe { ... }
-      [class*="widget"] { ... }
-
-  because those could accidentally modify maps, videos,
-  analytics frames, or other third-party content.
-
-  Instead, we only target obvious Zanderio identifiers
-  if they exist in the generated DOM.
+  We only make sure obvious Zanderio layers remain above
+  the site's normal UI.
 */
 
 iframe[src*="zanderio.ai"],
@@ -1290,24 +1826,18 @@ div[class*="zanderio"] {
   z-index: var(--z-widget-safe) !important;
 }
 
-
 /*
-  Some widget implementations use fixed positioning on
-  their root container. Preserve it and prevent accidental
-  clipping from normal page elements.
+  Prevent obvious widget elements from becoming horizontally
+  scrollable if the widget itself exposes an oversized box.
 */
-
 iframe[src*="zanderio.ai"],
 iframe[src*="zanderio"] {
-  position: fixed !important;
+  max-width: 100vw !important;
 }
 
-
 /*
-  If Zanderio uses a shadow/root host with an obvious
-  widget name, keep it above site UI.
+  Widget hosts generated with the widget ID pattern.
 */
-
 [id^="wdg_"],
 [id*="widget"][id*="zanderio"] {
   z-index: var(--z-widget-safe) !important;
@@ -1315,27 +1845,266 @@ iframe[src*="zanderio"] {
 
 
 /* ==========================================================================
-   RESPONSIVE SAFETY
+   MOBILE RESPONSIVE
    ========================================================================== */
 
-@media (max-width: 599px) {
+@media (max-width: 767px) {
 
-  /*
-    Prevent buttons/content from touching screen edges.
-    Does not affect the floating chatbot itself.
-  */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  h1 {
+    font-size: 2.35rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  .section {
+    padding: 3.5rem 0;
+  }
+
+  .hero-section {
+    padding: 3.5rem 0 2.5rem;
+  }
+
+  .hero-container {
+    gap: 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 10vw, 3rem);
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
   .hero-actions .btn {
-    max-width: 100%;
+    width: 100%;
+  }
+
+  .hero-image-wrapper {
+    width: 100%;
+  }
+
+  .page-hero {
+    padding: 3rem 0 1.75rem;
+  }
+
+  .page-hero-title {
+    font-size: clamp(2.2rem, 10vw, 3rem);
+  }
+
+  .service-card {
+    padding: 1.5rem;
+  }
+
+  .benefit-card {
+    padding: 1.5rem;
+  }
+
+  .experience-card {
+    padding: 2rem 1.25rem;
   }
 
   .contact-details-box,
   .contact-form-box {
-    padding: 1.75rem;
+    padding: 1.5rem;
   }
 
-  .experience-card {
-    padding: 2.25rem 1.5rem;
+  .map-placeholder {
+    padding: 2rem 1.25rem;
+  }
+
+  .faq-question {
+    padding: 1rem;
+
+    font-size: 1.1rem;
+  }
+
+  .faq-answer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .faq-item.is-open .faq-answer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .gallery-item {
+    height: 220px;
+  }
+}
+
+
+/* ==========================================================================
+   SMALL PHONES
+   ========================================================================== */
+
+@media (max-width: 380px) {
+
+  .container {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .header-container {
+    gap: 0.5rem;
+  }
+
+  .logo-main {
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+  }
+
+  .logo-sub {
+    font-size: 0.52rem;
+    letter-spacing: 0.25em;
+  }
+
+  .mobile-nav-drawer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .mobile-nav-link {
+    font-size: 1.55rem;
+  }
+
+  .hero-title {
+    font-size: 2.15rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+  }
+
+  .service-card {
+    padding: 1.25rem;
+  }
+
+  .contact-details-box,
+  .contact-form-box {
+    padding: 1.25rem;
+  }
+
+  .hours-list li {
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+}
+
+
+/* ==========================================================================
+   VERY SMALL DEVICES
+   ========================================================================== */
+
+@media (max-width: 320px) {
+
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .logo-main {
+    font-size: 1.15rem;
+  }
+
+  .logo-sub {
+    font-size: 0.48rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-actions .btn {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+
+/* ==========================================================================
+   LANDSCAPE MOBILE
+   ========================================================================== */
+
+@media (max-height: 500px) and (orientation: landscape) {
+
+  .mobile-nav-drawer {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .mobile-nav-list {
+    gap: 0.75rem;
+  }
+
+  .mobile-nav-link {
+    font-size: 1.35rem;
+  }
+
+  .hero-section {
+    min-height: auto;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+
+/* ==========================================================================
+   SAFE AREA — MODERN PHONES
+   ========================================================================== */
+
+@supports (padding: env(safe-area-inset-left)) {
+
+  .container {
+    padding-left: max(
+      1rem,
+      env(safe-area-inset-left)
+    );
+
+    padding-right: max(
+      1rem,
+      env(safe-area-inset-right)
+    );
+  }
+
+  .mobile-nav-drawer {
+    padding-left: max(
+      1rem,
+      env(safe-area-inset-left)
+    );
+
+    padding-right: max(
+      1rem,
+      env(safe-area-inset-right)
+    );
+
+    padding-bottom: max(
+      2rem,
+      env(safe-area-inset-bottom)
+    );
   }
 }
 
@@ -1346,12 +2115,17 @@ iframe[src*="zanderio"] {
 
 @media (prefers-reduced-motion: reduce) {
 
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   ::before,
   ::after {
     animation-duration: 0.01ms !important;
+
     animation-iteration-count: 1 !important;
+
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }
