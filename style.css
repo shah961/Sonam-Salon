@@ -918,3 +918,9 @@ h3 { font-size: 1.5rem; }
     scroll-behavior: auto !important;
   }
 }
+/* Zanderio Chatbot - visibility fix */
+iframe[src*="zanderio"],
+[id*="zanderio"],
+[class*="zanderio"] {
+  z-index: 2147483647 !important;
+}
